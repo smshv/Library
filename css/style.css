@@ -1,0 +1,20 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+#library{
+    display: grid;
+}
+#add-button{
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+    align-self: center;
+    justify-self: center;
+}
+#book-entry{
+    visibility: hidden;
+    grid-row: 3 / 4;
+    grid-column: 1/ 2;
+    align-self: center;
+    justify-self: center;
+}
