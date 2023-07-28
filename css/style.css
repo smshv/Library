@@ -2,8 +2,20 @@
     padding: 0px;
     margin: 0px;
 }
+body{
+    font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}
 #library{
     display: grid;
+    padding: 100px 200px;
+}
+table{
+    border-collapse: collapse;
+    text-align: center;
+}
+tr{
+    border-bottom: 1px solid #a3a3a3;
 }
 #add-button{
     grid-row: 3 / 4;
