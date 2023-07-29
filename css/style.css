@@ -5,10 +5,12 @@
 body{
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
+    font-size: 1.1em;
 }
 #library{
     display: grid;
-    padding: 100px 200px;
+    padding: 100px 10%;
+    row-gap: 20px;
 }
 table{
     border-collapse: collapse;
@@ -17,16 +19,52 @@ table{
 tr{
     border-bottom: 1px solid #a3a3a3;
 }
+td{
+    padding: 5px 0px;
+}
+button{
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 400;
+    width: 120px;
+    height: 40px;
+    color: white;
+}
 #add-button{
     grid-row: 3 / 4;
     grid-column: 1 / 2;
     align-self: center;
     justify-self: center;
+    background-color: #10b981;
 }
+#add-button:hover{
+    background-color: #059669;
+}
+.read-button{
+    text-align: center;
+    width: 120px;
+    height: 20px;
+    font-size: 0.8rem;
+    display: block;
+    margin: 5px auto;
+    background: none;
+}
+
 #book-entry{
     visibility: hidden;
     grid-row: 3 / 4;
     grid-column: 1/ 2;
     align-self: center;
     justify-self: center;
+}
+.button-container{
+    padding-top: 20px;
+}
+.delete-button, .button-container button{
+    background-color: #db2777;
+}
+.read-button:hover, .delete-button:hover, .button-container button:hover{
+    font-weight: 600;
 }
