@@ -4,12 +4,24 @@
 }
 body{
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 400;
     font-size: 1.1em;
+    padding: 100px 10%;
+}
+#header{
+    margin-bottom: 50px;
+}
+#header-main{
+    font-size: 2.0rem;
+    margin-bottom: 10px;
+}
+#sub-header{
+    font-size: 0.9rem;
+}
+a{
+    color: #38bdf8;
 }
 #library{
     display: grid;
-    padding: 100px 10%;
     row-gap: 20px;
 }
 table{
@@ -37,10 +49,10 @@ button{
     grid-column: 1 / 2;
     align-self: center;
     justify-self: center;
-    background-color: #10b981;
+    background-color: #38bdf8;
 }
 #add-button:hover{
-    background-color: #059669;
+    font-weight: 600;
 }
 .read-button{
     text-align: center;
@@ -67,4 +79,16 @@ button{
 }
 .read-button:hover, .delete-button:hover, .button-container button:hover{
     font-weight: 600;
+}
+
+input:not([type="checkbox"]){
+    appearance: none;
+    border: 1px solid #a1a1aa;
+    border-radius: 4px;
+    width: 200px;
+    height: 20px;
+}
+input:not([type="checkbox"]):focus{
+    outline: none;
+    border: 1px solid #a855f7;
 }
