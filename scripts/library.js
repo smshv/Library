@@ -1,23 +1,38 @@
-let library = [];
 const READ_STATUS_TEXT = ["Not read yet", "Read"];
 const READ_STATUS_COLOR = ["#38bdf8", "#db2777"];
 const bookListTable = document.querySelector("#book-lists");
 
-
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-
-    this.info = function (){
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read? "read" : "not read yet"}`;
+class Book{
+    constructor(title, author, pages, read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;    
+    }
+    toggleReadStatus(){
+        this.read = 1 - this.read;
+    }
+}
+class Library{
+    #booklist;
+    constructor(){
+        this.#booklist = [];
+        this.numBooks = 0;
+    }
+    addBook(title, author, pages, read){
+        this.#booklist.push(new Book(title, author, pages, read));
+        this.numBooks += 1;
+    }
+    deleteBook(bookIndex){
+        this.#booklist.splice(bookIndex, 1);
+        this.numBooks -= 1;
+    }
+    getBook(bookIndex){
+        return this.#booklist[bookIndex];
     }
 }
 
-function addToLibrary(bookObject){
-    library.push(bookObject);
-}
+const library = new Library();
 
 function addElement(parrentElem, elementName, textContent, classLabel = null){
     const elem = document.createElement(elementName);
@@ -47,22 +62,22 @@ function displayBook(bookObject, bookIndex){
 }
 
 function displayLibrary(){
-    for ( let i = 0; i < library.length; i++){
-        displayBook(library[i], i);
+    for ( let i = 0; i < library.numBooks; i++){
+        displayBook(library.getBook(i), i);
     }
 }
 
 function changeReadStatus(e){
     const bookIndex = Number(e.currentTarget.parentElement.parentElement.getAttribute("data"));
-    library[bookIndex].read = (1 - library[bookIndex].read);
-    e.currentTarget.previousSibling.textContent = READ_STATUS_TEXT[library[bookIndex].read];
-    e.currentTarget.style["background-color"] = READ_STATUS_COLOR[library[bookIndex].read];
+    library.getBook(bookIndex).toggleReadStatus();
+    e.currentTarget.previousSibling.textContent = READ_STATUS_TEXT[library.getBook(bookIndex).read];
+    e.currentTarget.style["background-color"] = READ_STATUS_COLOR[library.getBook(bookIndex).read];
 }
 
 function deleteBook(e){
     let tableRow = e.currentTarget.parentElement.parentElement;
     let bookIndex = Number(tableRow.getAttribute("data"));
-    library.splice(bookIndex, 1);
+    library.deleteBook(bookIndex);
     let siblingRow = tableRow.nextElementSibling;
     while (siblingRow != null ){
         tableRow.nextElementSibling.setAttribute("data", (bookIndex).toString());
@@ -92,9 +107,9 @@ document.querySelector("#book-entry").addEventListener(
     "submit", function (event) {
         event.preventDefault();
         const data = new FormData(this);
-        const bookIndex = library.length;
-        addToLibrary(new Book(data.get("title"), data.get("author"), data.get("pages"), data.has("read") ? 0:1 ));
-        displayBook(library[bookIndex], bookIndex);
+        const bookIndex = library.numBooks;
+        library.addBook(data.get("title"), data.get("author"), data.get("pages"), data.has("read") ? 0:1);
+        displayBook(library.getBook(bookIndex), bookIndex);
         this.reset();
         toggleDisplay(this, document.querySelector("#add-button"));
     }
