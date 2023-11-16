@@ -26,14 +26,25 @@
             </table>
             <button id="add-button">Add a book</button>
             <form id="book-entry" action="index.html" method="post" novalidate>
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" required>
-                <label for="author">Author</label>
-                <input type="text" id="author" name="author" required>
-                <label for="pages">Pages</label>
-                <input type="number" id="pages" name="pages" required>
-                <label for="read">Read Status</label>
-                <input type="checkbox" id="read" name="read" value="yes">
+                <div class="input-container">
+                    <label for="title">Title</label>
+                    <div>
+                        <input type="text" id="title" name="title" required>
+                        <p class="error-msg"></p>
+                    </div>
+                    <label for="author">Author</label>
+                    <div>
+                        <input type="text" id="author" name="author" required>
+                        <p class="error-msg"></p>
+                    </div>
+                    <label for="pages">Pages</label>
+                    <div>
+                        <input type="number" id="pages" name="pages" required>
+                        <p class="error-msg"></p>
+                    </div>
+                    <label for="read">Read Status</label>
+                    <input type="checkbox" id="read" name="read" value="yes">
+                </div>
                 <div class="button-container">
                     <button form="book-entry" type="submit" value="submit">Submit</button>
                     <button id="cancel-button" type="button">Cancel</button>

@@ -70,6 +70,13 @@ button{
     grid-column: 1/ 2;
     align-self: center;
     justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.input-container{
+    display: flex;
+    gap: 8px;
 }
 .button-container{
     padding-top: 20px;
@@ -91,4 +98,10 @@ input:not([type="checkbox"]){
 input:not([type="checkbox"]):focus{
     outline: none;
     border: 1px solid #a855f7;
+}
+.error-msg.invalid{
+    padding: 4px 8px;
+    background-color: tomato;
+    color: white;
+    font-size: 0.8rem;
 }

@@ -101,6 +101,7 @@ document.querySelector("#cancel-button").
 addEventListener("click", ()=>{ 
     const form = document.querySelector("#book-entry");
     form.reset();
+    hideError();
     toggleDisplay(form, document.querySelector("#add-button"))} );
 
 document.querySelector("#book-entry").addEventListener(
@@ -109,6 +110,7 @@ document.querySelector("#book-entry").addEventListener(
         if ( !event.currentTarget.checkValidity() ){
             event.currentTarget.reportValidity();
         }else{
+            hideError();
             const data = new FormData(this);
             const bookIndex = library.numBooks;
             library.addBook(data.get("title"), data.get("author"), data.get("pages"), data.has("read") ? 0:1);
@@ -128,14 +130,34 @@ document.querySelectorAll('input').forEach(formInput=>{
         if ( formInput.validity.typeMismatch ){
             const inputName = firstCharCapitalize(formInput.getAttribute('id'));
             const inputType = firstCharCapitalize(formInput.getAttribute('type'));
-            formInput.setCustomValidity(`Incorrect entry type provided. ${inputName} requires ${inputType} entry.`)
+            showError(`Incorrect entry type provided. ${inputName} requires ${inputType} entry.`, formInput.nextElementSibling);
+        }else{
+            formInput.nextElementSibling.textContent = "";
+            formInput.nextElementSibling.classList.remove('invalid');
         }
     });
 
     formInput.addEventListener('invalid', (event)=>{
-        const inputName = firstCharCapitalize(formInput.getAttribute('id'));
+        event.preventDefault();
         if ( formInput.validity.valueMissing ){
-            formInput.setCustomValidity(`${inputName} cannot be empty.`);
+            const inputName = firstCharCapitalize(formInput.getAttribute('id'));
+            showError(`${inputName} cannot be empty.`, formInput.nextElementSibling);
         }
     });
 });
+
+function showError(msg, msgBox){
+    msgBox.textContent = msg;
+    msgBox.classList.add('invalid');
+}
+
+function hideError(msgBox = null){
+    if (msgBox){
+        msgBox.textContent = "";
+        msgBox.classList.remove('invalid');
+    }else{
+        document.querySelectorAll('.error-msg').forEach(p=>{
+            hideError(p);
+        });   
+    }
+}
