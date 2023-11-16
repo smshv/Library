@@ -106,12 +106,36 @@ addEventListener("click", ()=>{
 document.querySelector("#book-entry").addEventListener(
     "submit", function (event) {
         event.preventDefault();
-        const data = new FormData(this);
-        const bookIndex = library.numBooks;
-        library.addBook(data.get("title"), data.get("author"), data.get("pages"), data.has("read") ? 0:1);
-        displayBook(library.getBook(bookIndex), bookIndex);
-        this.reset();
-        toggleDisplay(this, document.querySelector("#add-button"));
+        if ( !event.currentTarget.checkValidity() ){
+            event.currentTarget.reportValidity();
+        }else{
+            const data = new FormData(this);
+            const bookIndex = library.numBooks;
+            library.addBook(data.get("title"), data.get("author"), data.get("pages"), data.has("read") ? 0:1);
+            displayBook(library.getBook(bookIndex), bookIndex);
+            this.reset();
+            toggleDisplay(this, document.querySelector("#add-button"));
+        }
     }
 );
-    
+
+function firstCharCapitalize(input){
+    return `${input.charAt(0).toUpperCase()}${input.slice(1)}`;
+}
+
+document.querySelectorAll('input').forEach(formInput=>{
+    formInput.addEventListener('input', (event)=>{
+        if ( formInput.validity.typeMismatch ){
+            const inputName = firstCharCapitalize(formInput.getAttribute('id'));
+            const inputType = firstCharCapitalize(formInput.getAttribute('type'));
+            formInput.setCustomValidity(`Incorrect entry type provided. ${inputName} requires ${inputType} entry.`)
+        }
+    });
+
+    formInput.addEventListener('invalid', (event)=>{
+        const inputName = firstCharCapitalize(formInput.getAttribute('id'));
+        if ( formInput.validity.valueMissing ){
+            formInput.setCustomValidity(`${inputName} cannot be empty.`);
+        }
+    });
+});
